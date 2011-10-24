@@ -1,0 +1,87 @@
+<?php
+
+namespace NTM;
+
+class ReadTokenException extends \Exception {}
+
+function createToken($token,$value,$obj)
+{
+    $t = $obj->createToken($token);
+    $t->value = $value;
+    return $t;
+}
+
+%%
+
+%full
+%function nextToken
+%line
+%char
+%state COMMENT
+%class CSS3Lexer
+
+
+ident     = [-]?({nmstart})({nmchar})*
+name      = ({nmchar})+
+nmstart   = [_a-z]|({nonascii})|({escape})
+nonascii  = [^\0-\177]
+unicode   = \\[0-9a-f][0-9a-f]?[0-9a-f]?[0-9a-f]?[0-9a-f]?[0-9a-f]?(\r\n|[ \n\r\t\f])?
+escape    = ({unicode})|\\[^\n\r\f0-9a-f]
+nmchar    = [_a-z0-9-]|({nonascii})|({escape})
+num       = [0-9]+|[0-9]*\.[0-9]+
+string    = \"(\\.|[^\\\"])*\"|'(\\.|[^\\\"])*'
+space     = [ \t\n\f\r]
+
+%%
+
+
+<YYINITIAL> "/*"            { $this->yybegin(self::COMMENT); }
+<COMMENT>   "*/"            { $this->yybegin(self::YYINITIAL); }
+<COMMENT>   (.|[\r\n])      { }
+
+<YYINITIAL> {space}*"~="{space}*            { return createToken(CSS3Parser::TK_INCLUDES,'~=',$this); }
+<YYINITIAL> {space}*"|="{space}*            { return createToken(CSS3Parser::TK_DASHMATCH,'|=',$this); }
+<YYINITIAL> {space}*"^="{space}*            { return createToken(CSS3Parser::TK_PREFIXMATCH,'^=',$this); }
+<YYINITIAL> {space}*"$="{space}*            { return createToken(CSS3Parser::TK_SUFFIXMATCH,'$=',$this); }
+<YYINITIAL> {space}*"*="{space}*            { return createToken(CSS3Parser::TK_SUBSTRINGMATCH,'*=',$this); }
+<YYINITIAL> {space}*"="{space}*             { return createToken(CSS3Parser::TK_MATCH,'=',$this); }       
+<YYINITIAL> \.{ident}                       {
+                                              $tok = $this->createToken(CSS3Parser::TK_CLASS);
+                                              $tok->value = substr($tok->value,1);
+                                              return $tok;
+                                            }
+<YYINITIAL> {ident}                         { return $this->createToken(CSS3Parser::TK_IDENT); }
+<YYINITIAL> {space}*{string}{space}*        { 
+                                              $tok = $this->createToken(CSS3Parser::TK_STRING);
+                                              $tok->value = substr($tok->value,1,-1);
+                                              return $tok;
+                                            }
+<YYINITIAL> {ident}"("{space}*              { 
+                                              $tok = $this->createToken(CSS3Parser::TK_FUNCTION);
+                                              $tok->value = substr($tok->value,0,-1);
+                                              return $tok;
+                                            }
+<YYINITIAL> {space}*")"                     { return $this->createToken(CSS3Parser::TK_FUNCTION_CLOSE); }
+<YYINITIAL> {num}                           { return $this->createToken(CSS3Parser::TK_NUMBER); }
+<YYINITIAL> "#"{name}       { 
+                              $tok = $this->createToken(CSS3Parser::TK_HASH);
+                              $tok->value = substr($tok->value,1);
+                              return $tok;
+                            }
+<YYINITIAL> {space}*"+"{space}*             { return createToken(CSS3Parser::TK_PLUS,'+',$this); }
+<YYINITIAL> {space}*"-"{space}*             { return createToken(CSS3Parser::TK_MINUS,'-',$this); }
+<YYINITIAL> {space}*">"{space}*             { return createToken(CSS3Parser::TK_GREATER,'>',$this); }
+<YYINITIAL> {space}*","{space}*             { return createToken(CSS3Parser::TK_COMMA,',',$this); }
+<YYINITIAL> {space}*"~"{space}*             { return createToken(CSS3Parser::TK_TILDE,'~',$this); }
+<YYINITIAL> ":not("{space}*                 { return $this->createToken(CSS3Parser::TK_NOT); }
+
+<YYINITIAL> {num}{ident}    { return $this->createToken(CSS3Parser::TK_DIMENSION); }
+<YYINITIAL> ":"             { return $this->createToken(CSS3Parser::TK_COLON); }
+<YYINITIAL> "*"             { return $this->createToken(CSS3Parser::TK_STAR); }
+<YYINITIAL> "|"             { return $this->createToken(CSS3Parser::TK_PIPE); }
+<YYINITIAL> "["{space}*     { return createToken(CSS3Parser::TK_ATTR_OPEN,'[',$this); }
+<YYINITIAL> {space}*"]"     { return createToken(CSS3Parser::TK_ATTR_CLOSE,']',$this); }
+<YYINITIAL> {space}+        { return $this->createToken(CSS3Parser::TK_S); }
+
+
+.			{ throw new ReadTokenException("Invalid character [{$this->yytext()}] at {$this->yyline}:{$this->yycol}"); }
