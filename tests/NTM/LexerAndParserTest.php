@@ -147,11 +147,11 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
-                ':column(col.selected)',
+                ':column(col.select)',
                 array(
                     SimpleSelector::instance()->addPseudoClass(new CSS\PseudoClass(
                         'column',
-                        SimpleSelector::instance()->setElement('col')->addClass('selected')
+                        'col.select'
                     ))
                 )
             ),

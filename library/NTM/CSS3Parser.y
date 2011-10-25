@@ -80,7 +80,7 @@ pseudo(p) ::= COLON IDENT(i).               { p = new PseudoClass(i->value); }
 pseudo(p) ::= COLON COLON IDENT(i).         { p = new PseudoClass(':'.i->value); }
 pseudo(p) ::= COLON functional_pseudo(f).   { p = f; }
 
-functional_pseudo(f) ::= FUNCTION(n) expression_list(l) FUNCTION_CLOSE.     { f = new PseudoClass(n,l); }
+functional_pseudo(f) ::= FUNCTION(n) expression_list(l) FUNCTION_CLOSE.     { f = new PseudoClass(n->value,l); }
 
 expression_list(l) ::= expression(e).                       { l = e; }
 expression_list(l) ::= expression_list(o) expression(e).    { l = o.e; }
@@ -89,9 +89,10 @@ expression_list(l) ::= expression_list(o) S expression(e).  { l = o.' '.e; }
 expression(e) ::= PLUS.         { e = '+'; }
 expression(e) ::= DIMENSION(d). { e = d->value; }
 expression(e) ::= NUMBER(n).    { e = n->value; }
-expression(e) ::= STRING(s).    { e = s->value; }
+expression(e) ::= STRING(s).    { e = '"'.s->value; }
 expression(e) ::= IDENT(i).     { e = i->value; }
 expression(e) ::= MINUS.        { e = '-'; }
+expression(e) ::= CLASS(s).     { e = '.'.s->value; }
 
 
 negation(n) ::= NOT negation_arg(a) FUNCTION_CLOSE. { n = new PseudoClass('not',a); }
