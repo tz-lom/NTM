@@ -51,17 +51,18 @@ selector_variance(r) ::= attrib(v).        { r = SimpleSelector::instance()->add
 selector_variance(r) ::= pseudo(v).        { r = SimpleSelector::instance()->addPseudoClass(v); }
 selector_variance(r) ::= negation.         { r = SimpleSelector::instance(); }
 
-type_selector(t) ::= namespace_prefix IDENT(i).         { t = SimpleSelector::instance()->setElement(i->value); }
-type_selector(t) ::= IDENT(i).                          { t = SimpleSelector::instance()->setElement(i->value); }
+type_selector(t) ::= namespace_prefix(n) IDENT(i).          { t = SimpleSelector::instance()->setElement(i->value)->setNamespace(n); }
+type_selector(t) ::= IDENT(i).                              { t = SimpleSelector::instance()->setElement(i->value); }
 
-namespace_prefix ::= IDENT PIPE.
-namespace_prefix ::= STAR PIPE.
+namespace_prefix(p) ::= IDENT(i) PIPE.                      { p = i->value; }
+namespace_prefix(p) ::= STAR PIPE.                          { p = '*'; }
+namespace_prefix(p) ::= PIPE.                               { p = ''; }
 
-universal(u) ::= namespace_prefix STAR.                 { u = SimpleSelector::instance()->setElement('*'); }
-universal(u) ::= STAR.                                  { u = SimpleSelector::instance()->setElement('*'); }
+universal(u) ::= namespace_prefix(n) STAR.                  { u = SimpleSelector::instance()->setElement('*')->setNamespace(n); }
+universal(u) ::= STAR.                                      { u = SimpleSelector::instance()->setElement('*'); }
 
-identity(i) ::= namespace_prefix IDENT(s).          { i = s->value; }
-identity(i) ::= IDENT(s).                           { i = s->value; }
+identity(i) ::= namespace_prefix(n) IDENT(s).           { i = array(n,s->value); }
+identity(i) ::= IDENT(s).                               { i = s->value; }
 
 attrib(a) ::= ATTR_OPEN identity(i) relation(r) value(v) ATTR_CLOSE.                { a = new AttributeTest(i,r,v); }
 attrib(a) ::= ATTR_OPEN identity(i) relation(r) value(v) S IDENT(x) ATTR_CLOSE.     { a = new AttributeTest(i,r,v,x); }

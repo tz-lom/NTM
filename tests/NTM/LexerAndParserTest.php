@@ -192,6 +192,20 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
                         ))
                     )
                 )
+            ),
+            array(
+                'ns|div[ns2|attr$=value]',
+                array(
+                    SimpleSelector::instance()->setElement('div')->setNamespace('ns')->addAttribute(
+                        new CSS\AttributeTest(array('ns2','attr'), '$=', 'value')
+                    )
+                )
+            ),
+            array(
+                '|*',
+                array(
+                    SimpleSelector::instance()->setElement('*')->setNamespace('')
+                )
             )
                 
         );

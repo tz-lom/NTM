@@ -19,6 +19,7 @@ class SimpleSelector
     protected $attributes = array();
     protected $pseudo   = array();
     protected $parent = NULL;
+    protected $namespace;
 
     /**
      * @return SimpleSelector 
@@ -120,6 +121,17 @@ class SimpleSelector
         {
             return $this;
         }
+    }
+    
+    /**
+     *
+     * @param type $namespace
+     * @return SimpleSelector 
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+        return $this;
     }
 }
 

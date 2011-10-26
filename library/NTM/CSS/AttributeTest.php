@@ -13,10 +13,19 @@ class AttributeTest
     protected $value;
     protected $testcase;
     protected $ext;
+    protected $namespace;
     
     public function __construct($attr,$test,$value,$ext=NULL)
     {
-        $this->attr = $attr;
+        if(is_array($attr))
+        {
+            $this->namespace = $attr[0];
+            $this->attr = $attr[1];
+        }
+        else
+        {
+            $this->attr = $attr;
+        }
         $this->testcase = $test;
         $this->value = $value;
         $this->ext = $ext;
