@@ -12,10 +12,9 @@ class AttributeTest
     protected $attr;
     protected $value;
     protected $testcase;
-    protected $ext;
     protected $namespace = NULL;
     
-    public function __construct($attr,$test,$value,$ext=NULL)
+    public function __construct($attr,$test=NULL,$value=NULL)
     {
         if(is_array($attr))
         {
@@ -28,7 +27,6 @@ class AttributeTest
         }
         $this->testcase = $test;
         $this->value = $value;
-        $this->ext = $ext;
     }
     
     /**
@@ -40,10 +38,20 @@ class AttributeTest
     {
         if($this->namespace)
         {
+            if($this->testcase===NULL)
+            {
+                return $el->hasAttributeNS($this->namespace,$this->attr);
+            }
+            
             $value = $el->getAttributeNS($this->namespace, $this->attr);
         }
         else
         {
+            if($this->testcase===NULL)
+            {
+                return $el->hasAttribute($this->attr);
+            }
+            
             $value = $el->getAttribute($this->attr);
         }
         
@@ -63,19 +71,21 @@ class AttributeTest
                 }
                 break;
             case '$=':
-                if($this->value!=$value)
+                if($this->value=='') return false;
+                if(substr($this->value,-strlen($value))!=$value)
                 {
                     return false;
                 }
                 break;
             case '^=':
-                if($this->value!=$value)
+                if($this->value=='') return false;
+                if(substr($this->value,0,strlen($value))!==$value)
                 {
                     return false;
                 }
                 break;
             case '*=':
-                if($this->value!=$value)
+                if(substr($this->value,$value)===false)
                 {
                     return false;
                 }
@@ -83,7 +93,10 @@ class AttributeTest
             case '|=':
                 if($this->value!=$value)
                 {
-                    return false;
+                    if(substr($this->value,0,strlen($value)+1)!==$value.'-')
+                    {
+                        return false;
+                    }
                 }
                 break;
 

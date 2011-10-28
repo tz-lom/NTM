@@ -65,7 +65,7 @@ identity(i) ::= namespace_prefix(n) IDENT(s).           { i = array(n,s->value);
 identity(i) ::= IDENT(s).                               { i = s->value; }
 
 attrib(a) ::= ATTR_OPEN identity(i) relation(r) value(v) ATTR_CLOSE.                { a = new AttributeTest(i,r,v); }
-attrib(a) ::= ATTR_OPEN identity(i) relation(r) value(v) S IDENT(x) ATTR_CLOSE.     { a = new AttributeTest(i,r,v,x); }
+attrib(a) ::= ATTR_OPEN identity(i)  ATTR_CLOSE.                                    { a = new AttributeTest(i); }
 
 value(v) ::= IDENT(s).                      { v = s->value; }
 value(v) ::= STRING(s).                     { v = s->value; }

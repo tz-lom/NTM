@@ -162,9 +162,9 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
-                'div.c1.c2[ name ^= "ololo" not ]',
+                'div.c1.c2[ name ^= "ololo"  ]',
                 array(
-                    SimpleSelector::instance()->addClass('c1')->addClass('c2')->setElement('div')->addAttribute(new CSS\AttributeTest('name', '^=', 'ololo' , 'not'))
+                    SimpleSelector::instance()->addClass('c1')->addClass('c2')->setElement('div')->addAttribute(new CSS\AttributeTest('name', '^=', 'ololo'))
                 )
             ),
             array(
@@ -205,6 +205,14 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
                 '|*',
                 array(
                     SimpleSelector::instance()->setElement('*')->setNamespace('')
+                )
+            ),
+            array(
+                'img[alt]',
+                array(
+                    SimpleSelector::instance()->setElement('img')->addAttribute(
+                        new CSS\AttributeTest('alt')
+                    )
                 )
             )
                 
