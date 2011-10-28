@@ -13,13 +13,13 @@ class SimpleSelector
      * @var Combinator
      */
     protected $combinator = NULL;
-    protected $hash = '';
+    protected $hash = NULL;
     protected $classes = array();
-    protected $element = '';
+    protected $element = NULL;
     protected $attributes = array();
     protected $pseudo   = array();
     protected $parent = NULL;
-    protected $namespace;
+    protected $namespace = NULL;
 
     /**
      * @return SimpleSelector 
@@ -132,6 +132,58 @@ class SimpleSelector
     {
         $this->namespace = $namespace;
         return $this;
+    }
+    
+    /**
+     *
+     * @param \DOMElement $el
+     * @return boolean
+     */
+    public function check(\DOMElement $el)
+    {
+        if($this->hash)
+        {
+            if($el->getAttribute('id')!=$this->hash)
+            {
+                return false;
+            }
+        }
+        if($this->element)
+        {
+            if($this->element!='*' && $el->tagName!=$this->element)
+            {
+                return false;
+            }
+        }
+        if($this->classes)
+        {
+            $classes = explode(' ',$el->getAttribute('class'));
+            if(count(array_diff($this->classes,$classes))>0)
+            {
+                return false;
+            }
+        }
+        if($this->attributes)
+        {
+            foreach($this->attributes as $attr)
+            {
+                if(!$attr->check($el))
+                {
+                    return false;
+                }
+            }
+        }
+        if($this->pseudo)
+        {
+            foreach($this->pseudo as $pseudo)
+            {
+                if(!$pseudo->check($el))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
 
