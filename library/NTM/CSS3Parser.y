@@ -25,11 +25,11 @@ class ParceTokenException extends \ErrorException{};
 
 start ::= selectors_group.
 
-selectors_group ::= selector(s).     { $this->selectors = array(s->getRoot()); }
-selectors_group ::= selectors_group COMMA selector(s). { $this->selectors[] = s->getRoot(); }
+selectors_group ::= selector(s).     { $this->selectors = array(s); }
+selectors_group ::= selectors_group COMMA selector(s). { $this->selectors[] = s; }
 
 selector(s) ::= simple_selector_sequence(sss).      { s = sss; }
-selector(s) ::= selector(o) combinator(c) simple_selector_sequence(sss). { s = sss; o->setCombinator(new c(sss)); }
+selector(s) ::= selector(o) combinator(c) simple_selector_sequence(sss). { s = sss->setCombinator(new c(o)); }
 
 combinator(c) ::= PLUS.    [S]      { c = 'NTM\CSS\AdjacentSibling'; }
 combinator(c) ::= GREATER. [S]      { c = 'NTM\CSS\Child';}

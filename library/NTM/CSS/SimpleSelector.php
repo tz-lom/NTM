@@ -18,7 +18,6 @@ class SimpleSelector
     protected $element = NULL;
     protected $attributes = array();
     protected $pseudo   = array();
-    protected $parent = NULL;
     protected $namespace = NULL;
 
     /**
@@ -29,14 +28,33 @@ class SimpleSelector
         return new self;
     }
     
-    public function setParent($p)
-    {
-        $this->parent = $p;
-    }
-    
     public function XPath()
     {
+        //
+        //  */div[@id]
+        //
         
+        $xpath = '*/';
+        
+        if($this->namespace)
+        {
+            $xpath.=$this->namespace.':';
+        }
+        
+        if($this->element)
+        {
+            $xpath.=$this->element;
+        }
+        else
+        {
+            $xpath.='*';
+        }
+        
+        if($this->hash)
+        {
+            $xpath.="[@id='$this->hash']";
+        }
+        return $xpath;
     }
     
     /**
@@ -80,7 +98,6 @@ class SimpleSelector
     public function setCombinator(Combinator $el)
     {
         $this->combinator = $el;
-        $this->combinator->injectParent($this);
         return $this;
     }
     
@@ -109,18 +126,6 @@ class SimpleSelector
         $this->classes = array_merge($this->classes,$s->classes);
         $this->pseudo = array_merge($this->pseudo,$s->pseudo);
         return $this;
-    }
-    
-    public function getRoot()
-    {
-        if($this->parent)
-        {
-            return $this->parent->getRoot();
-        }
-        else
-        {
-            return $this;
-        }
     }
     
     /**
@@ -183,7 +188,15 @@ class SimpleSelector
                 }
             }
         }
-        return true;
+        
+        if($this->combinator)
+        {
+            return $this->combinator->check($el);
+        }
+        else
+        {
+            return true;
+        }
     }
 }
 

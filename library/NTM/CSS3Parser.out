@@ -1,0 +1,828 @@
+State 0:
+          start ::= * selectors_group
+          selectors_group ::= * selector
+          selectors_group ::= * selectors_group COMMA selector
+          selector ::= * simple_selector_sequence
+          selector ::= * selector combinator simple_selector_sequence
+          simple_selector_sequence ::= * type_selector selector_list
+          simple_selector_sequence ::= * universal selector_list
+          simple_selector_sequence ::= * type_selector
+          simple_selector_sequence ::= * universal
+          simple_selector_sequence ::= * selector_list
+          selector_list ::= * selector_variance
+          selector_list ::= * selector_list selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          type_selector ::= * namespace_prefix IDENT
+          type_selector ::= * IDENT
+          namespace_prefix ::= * IDENT PIPE
+          namespace_prefix ::= * STAR PIPE
+          namespace_prefix ::= * PIPE
+          universal ::= * namespace_prefix STAR
+          universal ::= * STAR
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                         IDENT shift  25
+                          PIPE shift  37
+                          STAR shift  26
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+                         start accept
+               selectors_group shift  18
+                      selector shift  15
+      simple_selector_sequence shift  77
+                 type_selector shift  4
+                 selector_list shift  8
+                     universal shift  5
+             selector_variance shift  72
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+              namespace_prefix shift  19
+
+State 1:
+          selectors_group ::= selectors_group COMMA * selector
+          selector ::= * simple_selector_sequence
+          selector ::= * selector combinator simple_selector_sequence
+          simple_selector_sequence ::= * type_selector selector_list
+          simple_selector_sequence ::= * universal selector_list
+          simple_selector_sequence ::= * type_selector
+          simple_selector_sequence ::= * universal
+          simple_selector_sequence ::= * selector_list
+          selector_list ::= * selector_variance
+          selector_list ::= * selector_list selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          type_selector ::= * namespace_prefix IDENT
+          type_selector ::= * IDENT
+          namespace_prefix ::= * IDENT PIPE
+          namespace_prefix ::= * STAR PIPE
+          namespace_prefix ::= * PIPE
+          universal ::= * namespace_prefix STAR
+          universal ::= * STAR
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                         IDENT shift  25
+                          PIPE shift  37
+                          STAR shift  26
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+                      selector shift  14
+      simple_selector_sequence shift  77
+                 type_selector shift  4
+                 selector_list shift  8
+                     universal shift  5
+             selector_variance shift  72
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+              namespace_prefix shift  19
+
+State 2:
+          selector ::= selector combinator * simple_selector_sequence
+          simple_selector_sequence ::= * type_selector selector_list
+          simple_selector_sequence ::= * universal selector_list
+          simple_selector_sequence ::= * type_selector
+          simple_selector_sequence ::= * universal
+          simple_selector_sequence ::= * selector_list
+          selector_list ::= * selector_variance
+          selector_list ::= * selector_list selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          type_selector ::= * namespace_prefix IDENT
+          type_selector ::= * IDENT
+          namespace_prefix ::= * IDENT PIPE
+          namespace_prefix ::= * STAR PIPE
+          namespace_prefix ::= * PIPE
+          universal ::= * namespace_prefix STAR
+          universal ::= * STAR
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                         IDENT shift  25
+                          PIPE shift  37
+                          STAR shift  26
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+      simple_selector_sequence shift  28
+                 type_selector shift  4
+                 selector_list shift  8
+                     universal shift  5
+             selector_variance shift  72
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+              namespace_prefix shift  19
+
+State 3:
+          type_selector ::= * namespace_prefix IDENT
+          type_selector ::= * IDENT
+          namespace_prefix ::= * IDENT PIPE
+          namespace_prefix ::= * STAR PIPE
+          namespace_prefix ::= * PIPE
+          universal ::= * namespace_prefix STAR
+          universal ::= * STAR
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= NOT * negation_arg FUNCTION_CLOSE
+          negation_arg ::= * type_selector
+          negation_arg ::= * universal
+          negation_arg ::= * HASH
+          negation_arg ::= * CLASS
+          negation_arg ::= * attrib
+          negation_arg ::= * pseudo
+
+                          HASH shift  68
+                         CLASS shift  69
+                         IDENT shift  25
+                          PIPE shift  37
+                          STAR shift  26
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                 type_selector shift  66
+                     universal shift  67
+                        attrib shift  70
+                        pseudo shift  71
+              namespace_prefix shift  19
+                  negation_arg shift  27
+
+State 4:
+          simple_selector_sequence ::= type_selector * selector_list
+     (11) simple_selector_sequence ::= type_selector *
+          selector_list ::= * selector_variance
+          selector_list ::= * selector_list selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+                 selector_list shift  6
+             selector_variance shift  72
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+                     {default} reduce 11
+
+State 5:
+          simple_selector_sequence ::= universal * selector_list
+     (12) simple_selector_sequence ::= universal *
+          selector_list ::= * selector_variance
+          selector_list ::= * selector_list selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+                 selector_list shift  7
+             selector_variance shift  72
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+                     {default} reduce 12
+
+State 6:
+      (9) simple_selector_sequence ::= type_selector selector_list *
+          selector_list ::= selector_list * selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+             selector_variance shift  29
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+                     {default} reduce 9
+
+State 7:
+     (10) simple_selector_sequence ::= universal selector_list *
+          selector_list ::= selector_list * selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+             selector_variance shift  29
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+                     {default} reduce 10
+
+State 8:
+     (13) simple_selector_sequence ::= selector_list *
+          selector_list ::= selector_list * selector_variance
+          selector_variance ::= * HASH
+          selector_variance ::= * CLASS
+          selector_variance ::= * attrib
+          selector_variance ::= * pseudo
+          selector_variance ::= * negation
+          attrib ::= * ATTR_OPEN identity relation value ATTR_CLOSE
+          attrib ::= * ATTR_OPEN identity ATTR_CLOSE
+          pseudo ::= * COLON IDENT
+          pseudo ::= * COLON COLON IDENT
+          pseudo ::= * COLON functional_pseudo
+          negation ::= * NOT negation_arg FUNCTION_CLOSE
+
+                          HASH shift  30
+                         CLASS shift  31
+                     ATTR_OPEN shift  10
+                         COLON shift  16
+                           NOT shift  3
+             selector_variance shift  29
+                        attrib shift  32
+                        pseudo shift  33
+                      negation shift  34
+                     {default} reduce 13
+
+State 9:
+          functional_pseudo ::= FUNCTION * expression_list FUNCTION_CLOSE
+          expression_list ::= * expression
+          expression_list ::= * expression_list expression
+          expression_list ::= * expression_list S expression
+          expression ::= * PLUS
+          expression ::= * DIMENSION
+          expression ::= * NUMBER
+          expression ::= * STRING
+          expression ::= * IDENT
+          expression ::= * MINUS
+          expression ::= * CLASS
+
+                          PLUS shift  55
+                         CLASS shift  61
+                         IDENT shift  59
+                        STRING shift  58
+                     DIMENSION shift  56
+                        NUMBER shift  57
+                         MINUS shift  60
+               expression_list shift  11
+                    expression shift  62
+
+State 10:
+          namespace_prefix ::= * IDENT PIPE
+          namespace_prefix ::= * STAR PIPE
+          namespace_prefix ::= * PIPE
+          identity ::= * namespace_prefix IDENT
+          identity ::= * IDENT
+          attrib ::= ATTR_OPEN * identity relation value ATTR_CLOSE
+          attrib ::= ATTR_OPEN * identity ATTR_CLOSE
+
+                         IDENT shift  20
+                          PIPE shift  37
+                          STAR shift  21
+              namespace_prefix shift  22
+                      identity shift  12
+
+State 11:
+          functional_pseudo ::= FUNCTION expression_list * FUNCTION_CLOSE
+          expression_list ::= expression_list * expression
+          expression_list ::= expression_list * S expression
+          expression ::= * PLUS
+          expression ::= * DIMENSION
+          expression ::= * NUMBER
+          expression ::= * STRING
+          expression ::= * IDENT
+          expression ::= * MINUS
+          expression ::= * CLASS
+
+                          PLUS shift  55
+                             S shift  13
+                         CLASS shift  61
+                         IDENT shift  59
+                        STRING shift  58
+                FUNCTION_CLOSE shift  52
+                     DIMENSION shift  56
+                        NUMBER shift  57
+                         MINUS shift  60
+                    expression shift  53
+
+State 12:
+          attrib ::= ATTR_OPEN identity * relation value ATTR_CLOSE
+          attrib ::= ATTR_OPEN identity * ATTR_CLOSE
+          relation ::= * PREFIXMATCH
+          relation ::= * SUFFIXMATCH
+          relation ::= * SUBSTRINGMATCH
+          relation ::= * MATCH
+          relation ::= * INCLUDES
+          relation ::= * DASHMATCH
+
+                    ATTR_CLOSE shift  42
+                   PREFIXMATCH shift  43
+                   SUFFIXMATCH shift  44
+                SUBSTRINGMATCH shift  45
+                         MATCH shift  46
+                      INCLUDES shift  47
+                     DASHMATCH shift  48
+                      relation shift  17
+
+State 13:
+          expression_list ::= expression_list S * expression
+          expression ::= * PLUS
+          expression ::= * DIMENSION
+          expression ::= * NUMBER
+          expression ::= * STRING
+          expression ::= * IDENT
+          expression ::= * MINUS
+          expression ::= * CLASS
+
+                          PLUS shift  55
+                         CLASS shift  61
+                         IDENT shift  59
+                        STRING shift  58
+                     DIMENSION shift  56
+                        NUMBER shift  57
+                         MINUS shift  60
+                    expression shift  54
+
+State 14:
+      (2) selectors_group ::= selectors_group COMMA selector *
+          selector ::= selector * combinator simple_selector_sequence
+          combinator ::= * PLUS
+          combinator ::= * GREATER
+          combinator ::= * TILDE
+          combinator ::= * S
+
+                          PLUS shift  73
+                             S shift  76
+                       GREATER shift  74
+                         TILDE shift  75
+                    combinator shift  2
+                     {default} reduce 2
+
+State 15:
+      (1) selectors_group ::= selector *
+          selector ::= selector * combinator simple_selector_sequence
+          combinator ::= * PLUS
+          combinator ::= * GREATER
+          combinator ::= * TILDE
+          combinator ::= * S
+
+                          PLUS shift  73
+                             S shift  76
+                       GREATER shift  74
+                         TILDE shift  75
+                    combinator shift  2
+                     {default} reduce 1
+
+State 16:
+          pseudo ::= COLON * IDENT
+          pseudo ::= COLON * COLON IDENT
+          pseudo ::= COLON * functional_pseudo
+          functional_pseudo ::= * FUNCTION expression_list FUNCTION_CLOSE
+
+                         IDENT shift  49
+                         COLON shift  24
+                      FUNCTION shift  9
+             functional_pseudo shift  51
+
+State 17:
+          attrib ::= ATTR_OPEN identity relation * value ATTR_CLOSE
+          value ::= * IDENT
+          value ::= * STRING
+
+                         IDENT shift  40
+                        STRING shift  41
+                         value shift  23
+
+State 18:
+      (0) start ::= selectors_group *
+          selectors_group ::= selectors_group * COMMA selector
+
+                             $ reduce 0
+                         COMMA shift  1
+
+State 19:
+          type_selector ::= namespace_prefix * IDENT
+          universal ::= namespace_prefix * STAR
+
+                         IDENT shift  63
+                          STAR shift  64
+
+State 20:
+          namespace_prefix ::= IDENT * PIPE
+     (29) identity ::= IDENT *
+
+                          PIPE shift  35
+                     {default} reduce 29
+
+State 21:
+          namespace_prefix ::= STAR * PIPE
+
+                          PIPE shift  36
+
+State 22:
+          identity ::= namespace_prefix * IDENT
+
+                         IDENT shift  38
+
+State 23:
+          attrib ::= ATTR_OPEN identity relation value * ATTR_CLOSE
+
+                    ATTR_CLOSE shift  39
+
+State 24:
+          pseudo ::= COLON COLON * IDENT
+
+                         IDENT shift  50
+
+State 25:
+     (22) type_selector ::= IDENT *
+          namespace_prefix ::= IDENT * PIPE
+
+                          PIPE shift  35
+                     {default} reduce 22
+
+State 26:
+          namespace_prefix ::= STAR * PIPE
+     (27) universal ::= STAR *
+
+                          PIPE shift  36
+                     {default} reduce 27
+
+State 27:
+          negation ::= NOT negation_arg * FUNCTION_CLOSE
+
+                FUNCTION_CLOSE shift  65
+
+State 28:
+      (4) selector ::= selector combinator simple_selector_sequence *
+
+                     {default} reduce 4
+
+State 29:
+     (15) selector_list ::= selector_list selector_variance *
+
+                     {default} reduce 15
+
+State 30:
+     (16) selector_variance ::= HASH *
+
+                     {default} reduce 16
+
+State 31:
+     (17) selector_variance ::= CLASS *
+
+                     {default} reduce 17
+
+State 32:
+     (18) selector_variance ::= attrib *
+
+                     {default} reduce 18
+
+State 33:
+     (19) selector_variance ::= pseudo *
+
+                     {default} reduce 19
+
+State 34:
+     (20) selector_variance ::= negation *
+
+                     {default} reduce 20
+
+State 35:
+     (23) namespace_prefix ::= IDENT PIPE *
+
+                     {default} reduce 23
+
+State 36:
+     (24) namespace_prefix ::= STAR PIPE *
+
+                     {default} reduce 24
+
+State 37:
+     (25) namespace_prefix ::= PIPE *
+
+                     {default} reduce 25
+
+State 38:
+     (28) identity ::= namespace_prefix IDENT *
+
+                     {default} reduce 28
+
+State 39:
+     (30) attrib ::= ATTR_OPEN identity relation value ATTR_CLOSE *
+
+                     {default} reduce 30
+
+State 40:
+     (32) value ::= IDENT *
+
+                     {default} reduce 32
+
+State 41:
+     (33) value ::= STRING *
+
+                     {default} reduce 33
+
+State 42:
+     (31) attrib ::= ATTR_OPEN identity ATTR_CLOSE *
+
+                     {default} reduce 31
+
+State 43:
+     (34) relation ::= PREFIXMATCH *
+
+                     {default} reduce 34
+
+State 44:
+     (35) relation ::= SUFFIXMATCH *
+
+                     {default} reduce 35
+
+State 45:
+     (36) relation ::= SUBSTRINGMATCH *
+
+                     {default} reduce 36
+
+State 46:
+     (37) relation ::= MATCH *
+
+                     {default} reduce 37
+
+State 47:
+     (38) relation ::= INCLUDES *
+
+                     {default} reduce 38
+
+State 48:
+     (39) relation ::= DASHMATCH *
+
+                     {default} reduce 39
+
+State 49:
+     (40) pseudo ::= COLON IDENT *
+
+                     {default} reduce 40
+
+State 50:
+     (41) pseudo ::= COLON COLON IDENT *
+
+                     {default} reduce 41
+
+State 51:
+     (42) pseudo ::= COLON functional_pseudo *
+
+                     {default} reduce 42
+
+State 52:
+     (43) functional_pseudo ::= FUNCTION expression_list FUNCTION_CLOSE *
+
+                     {default} reduce 43
+
+State 53:
+     (45) expression_list ::= expression_list expression *
+
+                     {default} reduce 45
+
+State 54:
+     (46) expression_list ::= expression_list S expression *
+
+                     {default} reduce 46
+
+State 55:
+     (47) expression ::= PLUS *
+
+                     {default} reduce 47
+
+State 56:
+     (48) expression ::= DIMENSION *
+
+                     {default} reduce 48
+
+State 57:
+     (49) expression ::= NUMBER *
+
+                     {default} reduce 49
+
+State 58:
+     (50) expression ::= STRING *
+
+                     {default} reduce 50
+
+State 59:
+     (51) expression ::= IDENT *
+
+                     {default} reduce 51
+
+State 60:
+     (52) expression ::= MINUS *
+
+                     {default} reduce 52
+
+State 61:
+     (53) expression ::= CLASS *
+
+                     {default} reduce 53
+
+State 62:
+     (44) expression_list ::= expression *
+
+                     {default} reduce 44
+
+State 63:
+     (21) type_selector ::= namespace_prefix IDENT *
+
+                     {default} reduce 21
+
+State 64:
+     (26) universal ::= namespace_prefix STAR *
+
+                     {default} reduce 26
+
+State 65:
+     (54) negation ::= NOT negation_arg FUNCTION_CLOSE *
+
+                     {default} reduce 54
+
+State 66:
+     (55) negation_arg ::= type_selector *
+
+                     {default} reduce 55
+
+State 67:
+     (56) negation_arg ::= universal *
+
+                     {default} reduce 56
+
+State 68:
+     (57) negation_arg ::= HASH *
+
+                     {default} reduce 57
+
+State 69:
+     (58) negation_arg ::= CLASS *
+
+                     {default} reduce 58
+
+State 70:
+     (59) negation_arg ::= attrib *
+
+                     {default} reduce 59
+
+State 71:
+     (60) negation_arg ::= pseudo *
+
+                     {default} reduce 60
+
+State 72:
+     (14) selector_list ::= selector_variance *
+
+                     {default} reduce 14
+
+State 73:
+      (5) combinator ::= PLUS *
+
+                     {default} reduce 5
+
+State 74:
+      (6) combinator ::= GREATER *
+
+                     {default} reduce 6
+
+State 75:
+      (7) combinator ::= TILDE *
+
+                     {default} reduce 7
+
+State 76:
+      (8) combinator ::= S *
+
+                     {default} reduce 8
+
+State 77:
+      (3) selector ::= simple_selector_sequence *
+
+                     {default} reduce 3
+
+----------------------------------------------------
+Symbols:
+    0: $:
+    1: COMMA
+    2: PLUS
+    3: S
+    4: GREATER
+    5: TILDE
+    6: HASH
+    7: CLASS
+    8: IDENT
+    9: PIPE
+   10: STAR
+   11: ATTR_OPEN
+   12: ATTR_CLOSE
+   13: STRING
+   14: PREFIXMATCH
+   15: SUFFIXMATCH
+   16: SUBSTRINGMATCH
+   17: MATCH
+   18: INCLUDES
+   19: DASHMATCH
+   20: COLON
+   21: FUNCTION
+   22: FUNCTION_CLOSE
+   23: DIMENSION
+   24: NUMBER
+   25: MINUS
+   26: NOT
+   27: error:
+   28: start: HASH CLASS IDENT PIPE STAR ATTR_OPEN COLON NOT
+   29: selectors_group: HASH CLASS IDENT PIPE STAR ATTR_OPEN COLON NOT
+   30: selector: HASH CLASS IDENT PIPE STAR ATTR_OPEN COLON NOT
+   31: simple_selector_sequence: HASH CLASS IDENT PIPE STAR ATTR_OPEN COLON NOT
+   32: combinator: PLUS S GREATER TILDE
+   33: type_selector: IDENT PIPE STAR
+   34: selector_list: HASH CLASS ATTR_OPEN COLON NOT
+   35: universal: IDENT PIPE STAR
+   36: selector_variance: HASH CLASS ATTR_OPEN COLON NOT
+   37: attrib: ATTR_OPEN
+   38: pseudo: COLON
+   39: negation: NOT
+   40: namespace_prefix: IDENT PIPE STAR
+   41: identity: IDENT PIPE STAR
+   42: relation: PREFIXMATCH SUFFIXMATCH SUBSTRINGMATCH MATCH INCLUDES DASHMATCH
+   43: value: IDENT STRING
+   44: functional_pseudo: FUNCTION
+   45: expression_list: PLUS CLASS IDENT STRING DIMENSION NUMBER MINUS
+   46: expression: PLUS CLASS IDENT STRING DIMENSION NUMBER MINUS
+   47: negation_arg: HASH CLASS IDENT PIPE STAR ATTR_OPEN COLON

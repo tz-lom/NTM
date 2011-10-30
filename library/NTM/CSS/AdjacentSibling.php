@@ -9,7 +9,7 @@ namespace NTM\CSS;
  */
 class AdjacentSibling extends Combinator
 {
-    public function XPath()
+    public function check(\DOMElement $el)
     {
         
     }

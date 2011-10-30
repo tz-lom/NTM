@@ -15,16 +15,11 @@ abstract class Combinator
      */
     protected $selector;
     
-    abstract public function XPath();
+    abstract public function check(\DOMElement $el);
     
     public function __construct(SimpleSelector $selector)
     {
         $this->selector = $selector;
-    }
-    
-    public function injectParent($el)
-    {
-        $this->selector->setParent($el);
     }
     
 }

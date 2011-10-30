@@ -10,7 +10,7 @@ namespace NTM\CSS;
  */
 class Child extends Combinator
 {
-    public function XPath()
+    public function check(\DOMElement $el)
     {
     
     }

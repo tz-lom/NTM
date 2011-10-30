@@ -8,7 +8,7 @@ namespace NTM\CSS;
  */
 class Descendant extends Combinator
 {
-    public function XPath()
+    public function check(\DOMElement $el)
     {
         
     }

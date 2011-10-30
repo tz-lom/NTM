@@ -9,7 +9,7 @@ namespace NTM\CSS;
  */
 class GeneralSibling extends Combinator
 {
-    public function XPath()
+    public function check(\DOMElement $el)
     {
         return '/*/'.$this->selector->XPath();
     }
