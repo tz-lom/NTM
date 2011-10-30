@@ -119,6 +119,8 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
         $parser = new CSS3Parser();
         
         //$parser->trace(STDOUT, '#');
+        
+        $this->actual = array();
 
         while($token = $lexer->nextToken())
         {
@@ -137,10 +139,10 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
             array(
                 'div >  p:first-child',
                 array(
-                    SimpleSelector::instance()->setElement('p')
-                        ->addPseudoClass(new CSS\PseudoClass('first-child'))
+                    SimpleSelector::instance()->setElement('div')
                         ->setCombinator(new Child(
-                            SimpleSelector::instance()->setElement('div')
+                            CSS\SimpleSelector::instance()->setElement('p')
+                                ->addPseudoClass(new CSS\PseudoClass('first-child'))
                         ))
                 )
             ),
@@ -168,11 +170,11 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
             array(
                 'div > .c1 + .c2 ~ #c3 #c4, ul',
                 array(
-                    SimpleSelector::instance()->setHash('c4')->setCombinator(
-                        new Descendant(SimpleSelector::instance()->setHash('c3')->setCombinator(
-                            new GeneralSibling(SimpleSelector::instance()->addClass('c2')->setCombinator(
-                                new AdjacentSibling(SimpleSelector::instance()->addClass('c1')->setCombinator(
-                                     new Child(SimpleSelector::instance()->setElement('div'))
+                    SimpleSelector::instance()->setElement('div')->setCombinator(
+                        new Child(SimpleSelector::instance()->addClass('c1')->setCombinator(
+                            new AdjacentSibling(SimpleSelector::instance()->addClass('c2')->setCombinator(
+                                new GeneralSibling(SimpleSelector::instance()->setHash('c3')->setCombinator(
+                                     new Descendant(SimpleSelector::instance()->setHash('c4'))
                                 ))
                             ))
                         ))
@@ -184,9 +186,9 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
             array(
                 'div p li',
                 array(
-                    SimpleSelector::instance()->setElement('li')->setCombinator(
+                    SimpleSelector::instance()->setElement('div')->setCombinator(
                         new Descendant(SimpleSelector::instance()->setElement('p')->setCombinator(
-                            new Descendant(SimpleSelector::instance()->setElement('div'))
+                            new Descendant(SimpleSelector::instance()->setElement('li'))
                         ))
                     )
                 )
