@@ -16,6 +16,8 @@ class NTM
     protected $partial = false;
     protected $nodoctype = false;
     
+    protected $masked = array();
+    
     public function __construct($template,$trigger = NULL)
     {
         $this->trigger = $trigger?$trigger:$this->trigger;
@@ -55,7 +57,8 @@ class NTM
     
     public function encodeMarkdown($hide)
     {
-        return $this->trigger.md5($hide).bin2hex($hide).'z';
+        $this->masked[] = $hide;
+        return $this->trigger.dechex(count($this->masked)-1).'z';
     }
     
     public function decodeMarkdown($data)
@@ -63,17 +66,14 @@ class NTM
         if(substr($data,-1)!='z') return false;
         
         $Tlen = strlen($this->trigger);
-        $Hlen = strlen(md5(''));
         
         if(substr($data,0,$Tlen)!=$this->trigger) return false;
         
-        $hash = substr($data,$Tlen,$Hlen);      //get hash
-        $data = substr($data,$Tlen+$Hlen,-1);   //get data
+        $data = substr($data,$Tlen,-1);   //get data
 
-        $data = pack('h*',$data); //decode
-        
-        if(md5($data)==$hash)
-            return $data;
+        $id = hexdec($data);
+        if(isset($this->masked[$id]))
+            return $this->masked[$id];
         else
             return false;
     }
@@ -83,7 +83,6 @@ class NTM
         $tokens = token_get_all($template);
         
         $html = '';
-        $this->trigger.=md5($template);
         
         $hide = '';
         
@@ -120,7 +119,6 @@ class NTM
     protected function showMarkdown($html)
     {
         $Tlen = strlen($this->trigger);
-        $Hlen = strlen(md5(''));
         
         $pos = 0;
         while($pos<strlen($html) && ($pos = strpos($html, $this->trigger,$pos))!==false)

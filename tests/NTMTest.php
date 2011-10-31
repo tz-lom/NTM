@@ -24,7 +24,7 @@ class NTMTest extends PHPUnit_Framework_TestCase
             array("<!DOCTYPE HTML>\n<html><head><title></title></head><body></body></html>"),
             array("<!DOCTYPE HTML>\n<html><head><title><?php \$tags=123; ?></title></head><body></body></html>"),
             array('<?php echo "no html";?>'),
-            array('<html <?php echo $a;?>><?php $a=3; ?></html>')
+            array('<div <?php echo $a;?>></div><?php $a=3; ?>')
         );
     }
 
