@@ -1,0 +1,50 @@
+<?php
+
+namespace NTM;
+
+class PHPReadTokenException extends \Exception {}
+
+%%
+
+%full
+%function nextToken
+%line
+%char
+%state COMMENT
+%state PHP
+%state HEREDOC
+
+%class PHPLexer
+
+
+ret = \r?\n
+
+%%
+
+<YYINITIAL> "<?php"                         { $this->yybegin(self::PHP); return $this->createToken(true); }
+<YYINITIAL> "<?="                           { $this->yybegin(self::PHP); return $this->createToken(true); }
+<YYINITIAL> "<?"                            { $this->yybegin(self::PHP); return $this->createToken(true); }
+
+<PHP> //[^\r\n]*                            { return $this->createToken(true); }
+<PHP> "/*"                                  { $this->yybegin(self::COMMENT); return $this->createToken(true); }
+<PHP> "*/"                                  { $this->yybegin(self::PHP); return $this->createToken(true); }
+<PHP> "?>"                                  { $this->yybegin(self::YYINITIAL); return $this->createToken(true);  }
+<PHP> \"(\\.|[^\\\"])*\"                    { return $this->createToken(true); }
+<PHP> '(\\'|[^'])*'                         { return $this->createToken(true); }
+
+<PHP> <<<[a-zA-Z][a-zA-Z0-9]*               { 
+                                              $this->yybegin(self::HEREDOC);
+                                              $tok = $this->createToken(true);
+                                              $this->mem_heredoc = substr($tok->value,3);
+                                              return $tok;
+                                            }
+<HEREDOC> {ret}[a-zA-Z][a-zA-Z0-9]*;{ret}   { 
+                                              $tok = $this->createToken(true);
+                                              if(substr(trim($tok->value),0,-1)==$this->mem_heredoc) $this->yybegin(self::PHP);
+                                              return $tok;
+                                            }
+
+<PHP> (.|[\r\n])+                           { return $this->createToken(true); }
+<YYINITIAL> (.|[\r\n])+                     { return $this->createToken(false); }
+<HEREDOC> (.|[\r\n])+                       { return $this->createToken(true); }
+<COMMENT> (.|[\r\n])+                       { return $this->createToken(true); }

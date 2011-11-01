@@ -18,11 +18,16 @@ class NTM
     
     protected $masked = array();
     
-    public function __construct($template,$trigger = NULL)
+    public function __construct($template, $templateClass = '\\NTM\\TemplatePHP', $trigger = NULL)
     {
         $this->trigger = $trigger?$trigger:$this->trigger;
         
-        $html = $this->hideMarkdown($template);
+        if(is_strig($templateClass))
+        {
+            $templateClass = new $templateClass;
+        }
+        
+        $html = $this->hideMarkdown($template,$templateClass);
         
         $this->partial = stripos($html, '<html') === false;
         $this->nodoctype = stripos($html, '<!doctype') === false;
@@ -78,40 +83,21 @@ class NTM
             return false;
     }
     
-    protected function hideMarkdown($template)
-    {
-        $tokens = token_get_all($template);
-        
+    protected function hideMarkdown($template, \NTM\TemplateSeparator $separator)
+    {        
+        $sections = $separator->separate($template);        
         $html = '';
         
-        $hide = '';
-        
-        foreach($tokens as $token)
+        foreach($sections as $section)
         {
-            if(is_array($token))
+            if($section[0]==false)
             {
-                if($token[0]==311)
-                {
-                    if($hide)
-                    {
-                        $html.=$this->encodeMarkdown($hide);
-                        $hide='';
-                    }
-                    $html.=$token[1];
-                }
-                else
-                {
-                    $hide.=$token[1];
-                }
+                $html.=$section[1];
             }
             else
             {
-                $hide.=$token;
+                $html.=$this->encodeMarkdown($seciton[1]);
             }
-        }
-        if($hide)
-        {
-            $html.=$this->encodeMarkdown($hide);
         }
         return $html;
     }
