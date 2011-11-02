@@ -96,7 +96,7 @@ class NTM
             }
             else
             {
-                $html.=$this->encodeMarkdown($seciton[1]);
+                $html.=$this->encodeMarkdown($section[1]);
             }
         }
         return $html;

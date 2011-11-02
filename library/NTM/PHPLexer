@@ -44,7 +44,7 @@ ret = \r?\n
                                               return $tok;
                                             }
 
-<PHP> (.|[\r\n])+                           { return $this->createToken(true); }
-<YYINITIAL> (.|[\r\n])+                     { return $this->createToken(false); }
-<HEREDOC> (.|[\r\n])+                       { return $this->createToken(true); }
-<COMMENT> (.|[\r\n])+                       { return $this->createToken(true); }
+<PHP> (.|[\r\n])                            { return $this->createToken(true); }
+<YYINITIAL> (.|[\r\n])                      { return $this->createToken(false); }
+<HEREDOC> (.|[\r\n])                        { return $this->createToken(true); }
+<COMMENT> (.|[\r\n])                        { return $this->createToken(true); }
