@@ -36,15 +36,33 @@ ret = \r?\n
                                               $this->yybegin(self::HEREDOC);
                                               $tok = $this->createToken(true);
                                               $this->mem_heredoc = substr($tok->value,3);
+                                              $this->mem_here_ret = false;
+                                              $this->mem_heredoc_appeared = false;
                                               return $tok;
                                             }
-<HEREDOC> {ret}[a-zA-Z][a-zA-Z0-9]*;{ret}   { 
+<HEREDOC> [a-zA-Z][a-zA-Z0-9]*;?            { 
                                               $tok = $this->createToken(true);
-                                              if(substr(trim($tok->value),0,-1)==$this->mem_heredoc) $this->yybegin(self::PHP);
+                                              if($this->mem_here_ret && 
+                                                    (
+                                                        (substr($tok->value,0,-1)==$this->mem_heredoc) ||
+                                                        ($tok->value==$this->mem_heredoc)
+                                                    )) $this->mem_heredoc_appeared = true;
+                                              else
+                                                $this->mem_heredoc_appeared = false;
+                                              return $tok;
+                                            }
+<HEREDOC> {ret}                             {
+                                              $tok = $this->createToken(true);
+                                              $this->mem_here_ret = true;
+                                              if($this->mem_heredoc_appeared == true)
+                                              {
+                                                $this->yybegin(self::PHP);
+                                              }
+                                              $this->ret_heredoc_appeared = false;
                                               return $tok;
                                             }
 
 <PHP> (.|[\r\n])                            { return $this->createToken(true); }
 <YYINITIAL> (.|[\r\n])                      { return $this->createToken(false); }
-<HEREDOC> (.|[\r\n])                        { return $this->createToken(true); }
+<HEREDOC> (.|[\r\n])                        { $this->mem_here_ret = false; $this->mem_heredoc_appeared = false; return $this->createToken(true); }
 <COMMENT> (.|[\r\n])                        { return $this->createToken(true); }

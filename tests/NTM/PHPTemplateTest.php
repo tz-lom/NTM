@@ -38,6 +38,45 @@ class PHPTemplateTest extends \PHPUnit_Framework_TestCase
                     array(false,''),
                     array(true,'<?php test')
                 )
+            ),
+            array(
+                'ht<?=php;?>',
+                array(
+                    array(false,'ht'),
+                    array(true,'<?=php;?>')
+                )
+            ),
+            array(
+                'h<? short php tag; ?>"text"',
+                array(
+                    array(false,'h'),
+                    array(true,'<? short php tag; ?>'),
+                    array(false,'"text"')
+                )
+            ),
+            array(
+                'h<?php "text?>"; \'?>\' "text\"?>" \'text\\\'?>\' ?>',
+                array(
+                    array(false,'h'),
+                    array(true,'<?php "text?>"; \'?>\' "text\"?>" \'text\\\'?>\' ?>')
+                )
+            ),
+            array(
+                <<<HERE
+h<?php <<<HEREDOC
+<?php
+"pew pew?>
+'?>
+NOT
+HEREDOC;
+?>html<<<HERE
+HERE
+                ,
+                array(
+                    array(false,'h'),
+                    array(true,"<?php <<<HEREDOC\n<?php\n\"pew pew?>\n'?>\nNOT\nHEREDOC;\n?>"),
+                    array(false,'html<<<HERE')
+                )
             )
         );
     }
