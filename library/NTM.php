@@ -22,7 +22,7 @@ class NTM
     {
         $this->trigger = $trigger?$trigger:$this->trigger;
         
-        if(is_strig($templateClass))
+        if(is_string($templateClass))
         {
             $templateClass = new $templateClass;
         }
