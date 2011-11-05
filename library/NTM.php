@@ -164,7 +164,13 @@ class NTM
     
     public function getElementsByCSS($css)
     {
-        return $this->selectElements($this->CSStoAST($css));
+        $selectors = $this->CSStoAST($css);
+        $ret = array();
+        foreach($selectors as $selector)
+        {
+            $ret = array_merge($ret,$this->selectElements($selector));
+        }
+        return $ret;
     }
     
     /**
@@ -175,11 +181,11 @@ class NTM
     public function CSStoAST($css)
     {
         $tempfile = fopen('php://temp/','rw');
-        fwrite($tempfile, $code);
+        fwrite($tempfile, $css);
         fseek($tempfile, 0);
         
-        $lexer = new CSS3Lexer($tempfile);
-        $parser = new CSS3Parser();
+        $lexer = new NTM\CSS3Lexer($tempfile);
+        $parser = new NTM\CSS3Parser();
         
         //$parser->trace(STDOUT, '#');
 
@@ -196,6 +202,9 @@ class NTM
     public function selectElements(NTM\CSS\SimpleSelector $selector)
     {
         $elements = $this->xpath->query($selector->XPath());
+        
+        var_dump($selector->XPath());
+        var_dump($elements);
         
         $result = array();
         

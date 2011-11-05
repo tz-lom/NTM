@@ -31,10 +31,10 @@ class SimpleSelector
     public function XPath()
     {
         //
-        //  */div[@id]
+        //  //div[@id]
         //
         
-        $xpath = '*/';
+        $xpath = '//';
         
         if($this->namespace)
         {
