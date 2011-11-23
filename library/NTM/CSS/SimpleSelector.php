@@ -108,7 +108,7 @@ class SimpleSelector
      */
     public function addAttribute(AttributeTest $attr)
     {
-        $sthis->attributes[] = $attr;
+        $this->attributes[] = $attr;
         return $this;
     }
     

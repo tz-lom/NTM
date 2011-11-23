@@ -12,7 +12,7 @@ class Child extends Combinator
 {
     public function check(\DOMElement $el)
     {
-        return $this->selector->check($el->parentNode);
+        return $el->parentNode instanceof \DOMElement && $this->selector->check($el->parentNode);
     }
 }
 

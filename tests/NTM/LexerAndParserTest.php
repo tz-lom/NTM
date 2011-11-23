@@ -212,6 +212,15 @@ class LexerAndParserTest extends \PHPUnit_Framework_TestCase
                         new CSS\AttributeTest('alt')
                     )
                 )
+            ),array(
+                'form[name="form"] [name="login"]',
+                array(
+                    SimpleSelector::instance()->addAttribute(
+                        new CSS\AttributeTest('name', '=', 'login')
+                    )->setCombinator(new CSS\Descendant(
+                        SimpleSelector::instance()->setElement('form')->addAttribute(new CSS\AttributeTest('name', '=', 'form'))
+                    ))
+                )
             )
                 
         );

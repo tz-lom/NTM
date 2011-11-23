@@ -13,7 +13,7 @@ class GeneralSibling extends Combinator
     {
         while($p=$el->previouseSibling)
         {
-            if($this->selector->check($p))
+            if($p instanceof \DOMElement && $this->selector->check($p))
                 return true;
         }
         return false;

@@ -10,7 +10,8 @@ class Descendant extends Combinator
 {
     public function check(\DOMElement $el)
     {
-        while($p=$el->parentNode)
+        $p = $el;
+        while(($p=$p->parentNode) && ($p instanceof \DOMElement))
         {
             if($this->selector->check($p))
                 return true;

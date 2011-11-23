@@ -11,7 +11,7 @@ class AdjacentSibling extends Combinator
 {
     public function check(\DOMElement $el)
     {
-        return $this->selector->check($el->previouseSibling);
+        return $el->previouseSibling instanceof \DOMElement && $this->selector->check($el->previouseSibling);
     }
 }
 

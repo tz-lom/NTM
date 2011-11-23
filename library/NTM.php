@@ -202,15 +202,12 @@ class NTM
     public function selectElements(NTM\CSS\SimpleSelector $selector)
     {
         $elements = $this->xpath->query($selector->XPath());
-        
-        var_dump($selector->XPath());
-        var_dump($elements);
-        
+                
         $result = array();
         
         foreach($elements as $element)
         {
-            if($selector->check($element))
+            if(($element instanceof \DOMElement)&& $selector->check($element))
             {
                 $result[] = $element;
             }
